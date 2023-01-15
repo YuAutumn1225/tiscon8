@@ -109,11 +109,11 @@ public class EstimateController {
      * @param model         遷移先に連携するデータ
      * @return 遷移先
      */
-    @PostMapping(value = "order", params = "backToConfirm")
+    @PostMapping(value = "order", params = "backToInput")
     String backToConfirm(UserOrderForm userOrderForm, Model model) {
         model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
         model.addAttribute("userOrderForm", userOrderForm);
-        return "confirm";
+        return "input";
     }
 
     /**
@@ -166,6 +166,33 @@ public class EstimateController {
         estimateService.registerOrder(dto);
 
         return "complete";
+    }
+
+    // /**
+    //  * Tips画面に戻る。
+    //  *
+    //  * @param model 遷移先に連携するデータ
+    //  * @return 遷移先
+    //  */
+    // @PostMapping(value = "submit", params = "backToTop")
+    // String backToTop(Model model) {
+    //     return "top";
+    // }
+
+        /**
+     * 入力画面に遷移する。
+     *
+     * @param model 遷移先に連携するデータ
+     * @return 遷移先
+     */
+    @GetMapping("tips")
+    String tips(Model model) {
+        // if (!model.containsAttribute("userOrderForm")) {
+        //     model.addAttribute("userOrderForm", new UserOrderForm());
+        // }
+
+        // model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
+        return "tips";
     }
 
 }

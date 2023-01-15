@@ -51,6 +51,7 @@
         <div class="form-group">
           <label for="oldPrefectureId">集荷元住所（都道府県）</label>
           <select id="oldPrefectureId" name="oldPrefectureId" class="form-control">
+            <option hidden value="">選択してください</option>
             <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{oldPrefectureId}">[[${prefecture.prefectureName}]]</option>
           </select>
           <div th:if="${#fields.hasErrors('oldPrefectureId')}" th:errors="*{oldPrefectureId}" class = "red"></div>
@@ -64,7 +65,7 @@
         <div class="form-group">
           <label for="newPrefectureId">お届け先住所（都道府県）</label>
           <select id="newPrefectureId" name="newPrefectureId" class="form-control">
-            <option hidden>選択してください</option>
+            <option hidden value="">選択してください</option>
             <option th:each="prefecture : ${prefectures}" th:value="${prefecture.prefectureId}" th:field="*{newPrefectureId}">[[${prefecture.prefectureName}]]</option>
           </select>
           <div th:if="${#fields.hasErrors('newPrefectureId')}" th:errors="*{newPrefectureId}" class = "red"></div>
@@ -81,11 +82,12 @@
         <div class="form-group">
           <label for="movingMonth">時期</label>
           <select id="movingMonth" name="movingMonth" class="form-control">
-            <option hidden>選択してください</option>
+            <option hidden value="">選択してください</option>
             <option th:value="0" th:text="3月-4月">3月-4月</option>
             <option th:value="1" th:text="9月">9月</option>
             <option th:value="2" th:text="5月-8月、10月-2月">5月-8月、10月-2月</option>
           </select>
+          <div th:if="${#fields.hasErrors('movingMonth')}" th:errors="*{movingMonth}" class = "red"></div>
         </div>
       </fieldset>
       <fieldset>
@@ -122,8 +124,8 @@
       </fieldset>
       <div class="form-group">
         <div class="text-center">
+          <button type="submit" name="confirm" class="btn btn-primary">ご入力内容の確認へ</button></br>
           <button type="submit" name="backToTop" class="btn-back">TOPへ戻る</button>
-          <button type="submit" name="confirm" class="btn btn-primary">ご入力内容の確認へ</button>
         </div>
       </div>
     </div>

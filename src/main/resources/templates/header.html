@@ -2,11 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head></head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#FFFFFF;" th:fragment="header">
+<nav class="navbar  navbar-light" style="background-color:#FFFFFF;" th:fragment="header">
     <a class="navbar-brand" href="/"><img src="../img/header_logo.svg" /></a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> -->
+        <!-- <span class="navbar-toggler-icon"></span> -->
+    <!-- </button> -->
+    <div class="text-right">
+        <a class="btn btn-primary" style="padding:16px" th:href="@{/tips}" role="button">tips</a>
+    </div>
 </nav>
 </body>
 </html>

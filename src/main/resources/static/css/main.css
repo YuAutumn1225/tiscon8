@@ -307,3 +307,29 @@ td {
     border-radius: .28571429rem;
     border: 1px solid rgba(34,36,38,.15);
 }
+
+.tips-headline {
+    margin: 64px;
+    color: #2EA9BC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 64px;
+    font-family: "Roboto";
+}
+
+.tips-paragraph {
+    margin: 32px;
+    color: #2EA9BC;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
+    font-family: "Roboto";
+}
+
+.tips-text {
+    color: #000000;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: "Roboto";
+}
