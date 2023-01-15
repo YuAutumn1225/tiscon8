@@ -143,23 +143,47 @@ public class EstimateController {
         Integer price = estimateService.getPrice(dto);
         
         String month_id = dto.getMovingMonth(); // month_id の取得
-        int bed_num = dto.getBed();
-        int bicycle_num = dto.getBicycle();
-        // int box_num = dto.getBox();
+
+        String[] ids ={"0", "1", "2"}; // idのリスト
+        double month_rate = 1.0; // rateの初期値
+        String month = "";
+
+        // 引っ越し予定期間によって引っ越し料の倍率、期間を変更する
+        if (month_id.equals(ids[0])){
+            month_rate = 1.5;
+            month = "3月-4月";
+        }else if (month_id.equals(ids[1])){
+            month_rate = 1.2;
+            month = "9月";
+        }else if (month_id.equals(ids[2])){
+            month_rate = 1.0;
+            month = "5月-8月、10月-2月";
+        }
+
+        Integer bed_num = dto.getBed();
+        Integer bicycle_num = dto.getBicycle();
+        Integer box_num = dto.getBox();
 
         String old_prefecture = dto.getNewAddress();
         String new_prefecture = dto.getOldAddress();
 
         double distance = estimateDAO.getDistance(dto.getOldPrefectureId(), dto.getNewPrefectureId());
 
-        int boxes = getBoxForPackage(dto.getBox(), PackageType.BOX)
+        Integer boxes = getBoxForPackage(dto.getBox(), PackageType.BOX)
                 + getBoxForPackage(dto.getBed(), PackageType.BED)
                 + getBoxForPackage(dto.getBicycle(), PackageType.BICYCLE)
                 + getBoxForPackage(dto.getWashingMachine(), PackageType.WASHING_MACHINE);
         
+        // トラック輸送量
+        int track_price = 0;
+        if (boxes <= 80){
+            track_price = 30000;
+        }else if (80 < boxes){
+            track_price  = 50000;
+        }
 
         // 小数点以下を切り捨てる
-        int distanceInt = (int) Math.floor(distance);
+        Integer distanceInt = (int) Math.floor(distance);
 
         // 距離当たりの料金を算出する
         int priceForDistance = distanceInt * PRICE_PER_DISTANCE;
@@ -170,9 +194,14 @@ public class EstimateController {
         // オプションサービスの料金を算出する。
         int priceForOptionalService = 0;
 
+        boolean washingMachineInstall = dto.getWashingMachineInstallation();
+
         if (dto.getWashingMachineInstallation()) {
             priceForOptionalService = estimateDAO.getPricePerOptionalService(OptionalServiceType.WASHING_MACHINE.getCode());
         }
+
+        double tracking_num = (double)(priceForDistance + pricePerTruck); // 重み付け
+        int weighted_tracking_num = (int) Math.floor(month_rate * tracking_num); // int に変更
 
 
         model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
@@ -182,10 +211,18 @@ public class EstimateController {
         model.addAttribute("new_prefecture", new_prefecture);
         model.addAttribute("distance", distanceInt);
         model.addAttribute("boxes", boxes);
+        model.addAttribute("bed_num", bed_num);
+        model.addAttribute("bicycle_num", bicycle_num);
+        model.addAttribute("box_num", box_num);
         model.addAttribute("option_price", priceForOptionalService);
         model.addAttribute("track_price", pricePerTruck);
         model.addAttribute("distance_price", priceForDistance);
-        
+        model.addAttribute("WashInstall", washingMachineInstall);
+        model.addAttribute("track_price", track_price);
+        model.addAttribute("month_rate", month_rate);
+        model.addAttribute("month", month);
+        model.addAttribute("trans_num", weighted_tracking_num);
+
         return "result";
     }
 
