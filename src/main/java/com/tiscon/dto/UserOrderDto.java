@@ -26,6 +26,8 @@ public class UserOrderDto {
 
     private boolean washingMachineInstallation;
 
+    private String movingMonth;
+
     public String getCustomerName() {
         return customerName;
     }
@@ -48,6 +50,14 @@ public class UserOrderDto {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getMovingMonth() {
+        return movingMonth;
+    }
+
+    public void setMovingMonth(String movingMonth){
+        this.movingMonth = movingMonth;
     }
 
     public String getOldPrefectureId() {

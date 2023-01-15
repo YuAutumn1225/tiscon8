@@ -88,6 +88,27 @@
       </table>
     </div>
     <div class="col-sm-12">
+      <div class="sub-title">引っ越し時期</div>
+      <table class="table table-bordered">
+        <col span="1" style="background-color: #FFFFFF;">
+        <col span="2" style="background-color: #FFFFFF;">
+        <tbody>
+          <tr>
+            <th style="width: 40%">引っ越し時期</th>
+            <td>
+              <th:block th:if="${userOrderForm.movingMonth == '0'}">
+                <span th:text="3月-4月"></span></th:block>
+              <th:block th:if="${userOrderForm.movingMonth == '1'}">
+                <span th:text="9月"></span></th:block>
+              <th:block th:if="${userOrderForm.movingMonth == '2'}">
+                <span th:text="5月-8月、10月-2月"></span></th:block>
+            </td>
+            <input type="hidden" name="movingMonth" id="movingMonth" th:value="*{movingMonth}"/>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-12">
       <div class="sub-title">お荷物情報</div>
         <table class="table table-bordered">
           <col span="1" style="background-color: #FFFFFF;">

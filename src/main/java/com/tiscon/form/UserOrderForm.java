@@ -36,6 +36,12 @@ public class UserOrderForm {
     @NotBlank
     private String newAddress;
 
+    /**
+     * 引っ越し時期を格納する変数
+     */
+    @NotBlank
+    private String movingMonth;
+
     @Numeric
     @NotBlank
     private String box;
@@ -77,6 +83,17 @@ public class UserOrderForm {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * 引っ越し時期
+     */
+    public String getMovingMonth() {
+        return movingMonth;
+    }
+
+    public void setMovingMonth(String movingMonth){
+        this.movingMonth = movingMonth;
     }
 
     public String getOldPrefectureId() {
