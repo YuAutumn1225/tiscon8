@@ -21,8 +21,58 @@
     <div class="col-sm-12">
       <div class="text-center">
         <div class="primary-text"><span th:text="${price}"></span>円</div>
+        <!-- <div class="prefecture">
+          <span th:text="${prefecture}"></span>
+        </div> -->
         <button type="submit" name="complete" class="btn btn-primary">詳細見積もり依頼へ</button>
       </div>
+
+      <div class="sub-title">お荷物情報</div>
+        <table class="table table-bordered">
+        <col span="1" style="background-color: #FFFFFF;">
+        <col span="2" style="background-color: #FFFFFF;">
+        <col span="3" style="background-color: #FFFFFF;">
+        <tr>
+          <th>詳細</th>
+          <th>個数</th>
+          <th>換算</th>
+        </tr>
+        <tbody>
+        <tr>
+          <th style="width: 40%">段ボールの個数</th>
+          <td><span th:text="*{customerName}"></span></td>
+          <td><span th:text="*{customerName}"></span></td>
+          <input type="hidden" name="customerName" id="customerName" th:value="*{customerName}"/>
+        </tr>
+        <tr>
+          <th>ベッドの個数</th>
+          <td><span th:text="*{tel}"></span></td>
+          <td><span th:text="*{customerName}"></span></td>
+          <input type="hidden" name="tel" id="tel" th:value="*{tel}"/>
+        </tr>
+        <tr>
+          <th>自転車の個数</th>
+          <td><span th:text="*{email}"></span></td>
+          <td><span th:text="*{customerName}"></span></td>
+          <input type="hidden" name="email" id="email" th:value="*{email}"/>
+        </tr>
+        <tr>
+          <th>洗濯機の個数</th>
+          <td><span th:text="*{email}"></span></td>
+          <td><span th:text="*{customerName}"></span></td>
+          <input type="hidden" name="email" id="email" th:value="*{email}"/>
+        </tr>
+        <tr>
+          <th>合計</th>
+          <td><span th:text="*{email}"></span></td>
+          <td><span th:text="*{customerName}"></span></td>
+          <input type="hidden" name="email" id="email" th:value="*{email}"/>
+        </tr>
+        </tbody>
+        </table>
+        
+        <div>トラック輸送費は <span th:text="*{customerName}"></span>円です</div>
+
       <div class="sub-title">お客様情報</div>
         <table class="table table-bordered">
         <col span="1" style="background-color: #FFFFFF;">
@@ -110,7 +160,7 @@
       </table>
       <div class="form-group">
         <div class="text-center">
-          <button type="submit" name="backToConfirm" class="btn-back">TOPへ戻る</button>
+          <button type="submit" name="backToConfirm" class="btn-back">確認画面へ戻る</button>
         </div>
       </div>
     </div>

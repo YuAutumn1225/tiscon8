@@ -1,7 +1,9 @@
 package com.tiscon.controller;
 
 import com.tiscon.dao.EstimateDao;
+import com.tiscon.code.OptionalServiceType;
 import com.tiscon.dto.UserOrderDto;
+import com.tiscon.code.PackageType;
 import com.tiscon.form.UserOrderForm;
 import com.tiscon.service.EstimateService;
 import org.springframework.beans.BeanUtils;
@@ -132,15 +134,58 @@ public class EstimateController {
             model.addAttribute("userOrderForm", userOrderForm);
             return "confirm";
         }
+        
+        final int PRICE_PER_DISTANCE = 100;
 
         // 料金の計算を行う。
         UserOrderDto dto = new UserOrderDto();
         BeanUtils.copyProperties(userOrderForm, dto);
         Integer price = estimateService.getPrice(dto);
+        
+        String month_id = dto.getMovingMonth(); // month_id の取得
+        int bed_num = dto.getBed();
+        int bicycle_num = dto.getBicycle();
+        // int box_num = dto.getBox();
+
+        String old_prefecture = dto.getNewAddress();
+        String new_prefecture = dto.getOldAddress();
+
+        double distance = estimateDAO.getDistance(dto.getOldPrefectureId(), dto.getNewPrefectureId());
+
+        int boxes = getBoxForPackage(dto.getBox(), PackageType.BOX)
+                + getBoxForPackage(dto.getBed(), PackageType.BED)
+                + getBoxForPackage(dto.getBicycle(), PackageType.BICYCLE)
+                + getBoxForPackage(dto.getWashingMachine(), PackageType.WASHING_MACHINE);
+        
+
+        // 小数点以下を切り捨てる
+        int distanceInt = (int) Math.floor(distance);
+
+        // 距離当たりの料金を算出する
+        int priceForDistance = distanceInt * PRICE_PER_DISTANCE;
+
+        // 箱に応じてトラックの種類が変わり、それに応じて料金が変わるためトラック料金を算出する。
+        int pricePerTruck = estimateDAO.getPricePerTruck(boxes);
+
+        // オプションサービスの料金を算出する。
+        int priceForOptionalService = 0;
+
+        if (dto.getWashingMachineInstallation()) {
+            priceForOptionalService = estimateDAO.getPricePerOptionalService(OptionalServiceType.WASHING_MACHINE.getCode());
+        }
+
 
         model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
         model.addAttribute("userOrderForm", userOrderForm);
         model.addAttribute("price", price);
+        model.addAttribute("old_prefecture", old_prefecture);
+        model.addAttribute("new_prefecture", new_prefecture);
+        model.addAttribute("distance", distanceInt);
+        model.addAttribute("boxes", boxes);
+        model.addAttribute("option_price", priceForOptionalService);
+        model.addAttribute("track_price", pricePerTruck);
+        model.addAttribute("distance_price", priceForDistance);
+        
         return "result";
     }
 
@@ -168,4 +213,9 @@ public class EstimateController {
         return "complete";
     }
 
+    private int getBoxForPackage(int packageNum, PackageType type) {
+        return packageNum * estimateDAO.getBoxPerPackage(type.getCode());
+    }
 }
+
+
