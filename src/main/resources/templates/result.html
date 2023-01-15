@@ -37,41 +37,39 @@
           <th>個数</th>
           <th>換算</th>
         </tr>
-        <tbody>
         <tr>
           <th style="width: 40%">段ボールの個数</th>
-          <td><span th:text="*{customerName}"></span></td>
-          <td><span th:text="*{customerName}"></span></td>
-          <input type="hidden" name="customerName" id="customerName" th:value="*{customerName}"/>
+          <td><span th:text="*{box}"></span></td>
+          <td><span th:text="*{box}"></span></td>
+          <input type="hidden" name="box" id="box" th:value="*{box}"/>
         </tr>
         <tr>
           <th>ベッドの個数</th>
-          <td><span th:text="*{tel}"></span></td>
-          <td><span th:text="*{customerName}"></span></td>
-          <input type="hidden" name="tel" id="tel" th:value="*{tel}"/>
+          <td><span th:text="*{bed}"></span></td>
+          <td><span th:text="*{bed}*20"></span></td>
+          <input type="hidden" name="bed" id="bed" th:value="*{bed}"/>
         </tr>
         <tr>
           <th>自転車の個数</th>
-          <td><span th:text="*{email}"></span></td>
-          <td><span th:text="*{customerName}"></span></td>
-          <input type="hidden" name="email" id="email" th:value="*{email}"/>
+          <td><span th:text="*{bicycle}"></span></td>
+          <td><span th:text="*{bicycle}*15"></span></td>
+          <input type="hidden" name="bicycle" id="bicycle" th:value="*{bicycle}"/>
         </tr>
         <tr>
           <th>洗濯機の個数</th>
-          <td><span th:text="*{email}"></span></td>
-          <td><span th:text="*{customerName}"></span></td>
-          <input type="hidden" name="email" id="email" th:value="*{email}"/>
+          <td><span th:text="*{washingMachine}"></span></td>
+          <td><span th:text="*{washingMachine}*10"></span></td>
+          <input type="hidden" name="washingMachine" id="washingMachine" th:value="*{washingMachine}"/>
         </tr>
         <tr>
           <th>合計</th>
-          <td><span th:text="*{email}"></span></td>
-          <td><span th:text="*{customerName}"></span></td>
-          <input type="hidden" name="email" id="email" th:value="*{email}"/>
+          <td><span th:text="*{box}+*{bed}+*{bicycle}+*{washingMachine}"></span></td>
+          <td><span th:text="*{box}+*{bed}*20+*{bicycle}*15+*{washingMachine}*10"></span></td>
         </tr>
         </tbody>
         </table>
         
-        <div>トラック輸送費は <span th:text="*{customerName}"></span>円です</div>
+        <!-- <div>トラック輸送費は <span th:text="*{distance}"></span>円です</div> -->
 
       <div class="sub-title">お客様情報</div>
         <table class="table table-bordered">
