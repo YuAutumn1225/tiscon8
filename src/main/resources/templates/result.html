@@ -21,8 +21,109 @@
     <div class="col-sm-12">
       <div class="text-center">
         <div class="primary-text"><span th:text="${price}"></span>円</div>
+        <!-- <div class="prefecture">
+          <span th:text="${prefecture}"></span>
+        </div> -->
         <button type="submit" name="complete" class="btn btn-primary">詳細見積もり依頼へ</button>
       </div>
+      <h3><b>内訳</b></h3>
+      <div class="sub-title">お荷物情報</div>
+        <table class="table table-bordered">
+        <col span="1" style="background-color: #FFFFFF;">
+        <col span="2" style="background-color: #FFFFFF;">
+        <col span="3" style="background-color: #FFFFFF;">
+        <tr>
+          <th>詳細</th>
+          <th>個数</th>
+          <th>換算</th>
+        </tr>
+        <tr>
+          <th style="width: 40%">段ボールの個数</th>
+          <td><span th:text="*{box}"></span></td>
+          <td><span th:text="*{box}"></span></td>
+          <input type="hidden" name="box" id="box" th:value="*{box}"/>
+        </tr>
+        <tr>
+          <th>ベッドの個数</th>
+          <td><span th:text="*{bed}"></span></td>
+          <td><span th:text="*{bed}*20"></span></td>
+          <input type="hidden" name="bed" id="bed" th:value="*{bed}"/>
+        </tr>
+        <tr>
+          <th>自転車の個数</th>
+          <td><span th:text="*{bicycle}"></span></td>
+          <td><span th:text="*{bicycle}*15"></span></td>
+          <input type="hidden" name="bicycle" id="bicycle" th:value="*{bicycle}"/>
+        </tr>
+        <tr>
+          <th>洗濯機の個数</th>
+          <td><span th:text="*{washingMachine}"></span></td>
+          <td><span th:text="*{washingMachine}*10"></span></td>
+          <input type="hidden" name="washingMachine" id="washingMachine" th:value="*{washingMachine}"/>
+        </tr>
+        <tr>
+          <th>合計</th>
+          <td><span th:text="*{box}+*{bed}+*{bicycle}+*{washingMachine}"></span></td>
+          <td><span th:text="*{box}+*{bed}*20+*{bicycle}*15+*{washingMachine}*10"></span></td>
+        </tr>
+        </tbody>
+        </table>
+
+        <div>
+          トラック輸送費*1は <span th:text="${track_price}"></span> 円です。<br>
+          <br>
+          <b>距離情報</b><br>
+          輸送距離： 約<span th:text="${distance}"></span> km<br>
+          輸送費は <span th:text="${distance}*100"></span>円です</div>
+          <br>
+          <b>季節係数</b><br>
+          <span th:text="${month_rate}"></span>倍　（<span th:text="${month}"></span>）<br>
+          <br>
+          総輸送費は　<span th:text="${trans_num}"></span>円 *2,3です。
+        </div>
+        <div class="sub-title">オプション情報</div>
+        <table class="table table-bordered">
+          <col span="1" style="background-color: #FFFFFF;">
+          <col span="2" style="background-color: #FFFFFF;">
+          <tbody>
+          <tr>
+            <th>洗濯機の設置工事申し込み</th>
+            <td><span th:text="*{washingMachineInstallation} ? 'あり' : 'なし'"></span></td>
+            <input type="hidden" name="washingMachineInstallation" id="washingMachineInstallation" th:value="*{washingMachineInstallation}"/>
+          </tr>
+          </tbody>
+        </table>
+        <div>オプション料金は <span th:text="${option_price}"></span>円です</div><br>
+        <div>お見積もり金額は　総輸送費　＋　オプション料金　= <span th:text="${price}"></span>円</div>
+        <br>
+        <p>
+          *1　トラック別輸送費
+          <table class="table table-bordered">
+            <col span="1" style="background-color: #FFFFFF;">
+            <col span="2" style="background-color: #FFFFFF;">
+            <tbody>
+            <tr>
+              <th style="font-weight: bold;">トラックの種類</th>
+              <th style="font-weight: bold;">トラック輸送費</th>
+              <th style="font-weight: bold;">積載可能な段ボール数</th>
+            </tr>
+            <tr>
+              <td style="font-weight: normal;">2トントラック</td>
+              <td style="font-weight: normal;">3万円</td>
+              <td style="font-weight: normal;">80個</td>
+            </tr>
+            <tr>
+              <td style="font-weight: normal;">4トントラック</td>
+              <td style="font-weight: normal;">5万円</td>
+              <td style="font-weight: normal;">200個</td>
+            </tr>
+            </tbody>
+          </table>
+          *2　距離　✖️　100(円/km) + トラック輸送費　で計算しています<br>
+          *3　3・４月は1.5倍、9月は1.2倍になります
+        </p>
+        <br>
+      <h3><b>入力内容</b></h3>
       <div class="sub-title">お客様情報</div>
         <table class="table table-bordered">
         <col span="1" style="background-color: #FFFFFF;">
@@ -76,6 +177,27 @@
         </tr>
         </tbody>
       </table>
+      <div class="col-sm-12">
+        <div class="sub-title">引っ越し時期</div>
+        <table class="table table-bordered">
+          <col span="1" style="background-color: #FFFFFF;">
+          <col span="2" style="background-color: #FFFFFF;">
+          <tbody>
+            <tr>
+              <th style="width: 40%">引っ越し時期</th>
+              <td>
+                <th:block th:if="${userOrderForm.movingMonth == '0'}">
+                  <span th:text="3月-4月"></span></th:block>
+                <th:block th:if="${userOrderForm.movingMonth == '1'}">
+                  <span th:text="9月"></span></th:block>
+                <th:block th:if="${userOrderForm.movingMonth == '2'}">
+                  <span th:text="5月-8月、10月-2月"></span></th:block>
+              </td>
+              <input type="hidden" name="movingMonth" id="movingMonth" th:value="*{movingMonth}"/>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div class="sub-title">お荷物情報</div>
       <table class="table table-bordered">
         <col span="1" style="background-color: #FFFFFF;">

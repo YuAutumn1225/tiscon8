@@ -37,6 +37,59 @@ public class EstimateService {
     }
 
     /**
+     * 内訳算出用に引っ越しパラメータを返す。
+     *
+     * @param dto 見積もり依頼情報
+     * @return 概算見積もり結果の料金
+     */
+    // public EstimateService() {
+    //     double distance = estimateDAO.getDistance(dto.getOldPrefectureId(), dto.getNewPrefectureId());
+
+    //     String month_id = dto.getMovingMonth(); // month_id の取得
+    //     String[] ids ={"0", "1", "2"}; // idのリスト
+    //     double month_rate = 1.0; // rateの初期値
+
+    //     // System.out.println(month_id.getClass().getSimpleName());
+    //     // System.out.println(month_id.equals(ids[0]));
+    //     // System.out.println(month_id.equals(ids[1]));
+
+    //     // 引っ越し予定期間によって引っ越し料の倍率を変更する
+    //     if (month_id.equals(ids[0])){
+    //         month_rate = 1.5;
+    //     }else if (month_id.equals(ids[1])){
+    //         month_rate = 1.2;
+    //     }else if (month_id.equals(ids[2])){
+    //         month_rate = 1.0;
+    //     }
+
+    //     // 小数点以下を切り捨てる
+    //     int distanceInt = (int) Math.floor(distance);
+
+    //     // 距離当たりの料金を算出する
+    //     int priceForDistance = distanceInt * PRICE_PER_DISTANCE;
+
+    //     int boxes = getBoxForPackage(dto.getBox(), PackageType.BOX)
+    //             + getBoxForPackage(dto.getBed(), PackageType.BED)
+    //             + getBoxForPackage(dto.getBicycle(), PackageType.BICYCLE)
+    //             + getBoxForPackage(dto.getWashingMachine(), PackageType.WASHING_MACHINE);
+
+    //     // 箱に応じてトラックの種類が変わり、それに応じて料金が変わるためトラック料金を算出する。
+    //     int pricePerTruck = estimateDAO.getPricePerTruck(boxes);
+
+    //     // オプションサービスの料金を算出する。
+    //     int priceForOptionalService = 0;
+
+    //     if (dto.getWashingMachineInstallation()) {
+    //         priceForOptionalService = estimateDAO.getPricePerOptionalService(OptionalServiceType.WASHING_MACHINE.getCode());
+    //     }
+
+    //     double tracking_num = (double)(priceForDistance + pricePerTruck); // 重み付け
+    //     int weighted_tracking_num = (int) Math.floor(month_rate * tracking_num); // int に変更
+
+    //     return  prefecture;
+    // }
+
+    /**
      * 見積もり依頼をDBに登録する。
      *
      * @param dto 見積もり依頼情報
